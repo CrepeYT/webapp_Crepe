@@ -1,13 +1,13 @@
-﻿
-using API.Data;
+﻿using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
-
-[ApiController]
-[Route("api/[controller]")] // [controller] = Users, (UsersController - Controller = User), ~route = /api/users
+[AllowAnonymous]
+//[Authorize]
+// [controller] = Users, (UsersController - Controller = User), ~route = /api/users
 public class UsersController : BaseApiController
 {
     private readonly DataContext _dataContext;
@@ -18,6 +18,7 @@ public class UsersController : BaseApiController
         //putting cursor inside dataContext (ctor parameter) `ctrl+.` then select `create and assign feild`
         this._dataContext = dataContext;
     }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
@@ -30,4 +31,3 @@ public class UsersController : BaseApiController
         return await _dataContext.Users.FindAsync(id);
     }
 }
-

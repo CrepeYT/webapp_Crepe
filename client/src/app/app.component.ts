@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title: string = 'Hello';
+  faBell = faBell
+  title: string = 'Tinner !';
   users: any
 
   constructor(private http: HttpClient) { }
@@ -20,5 +22,3 @@ export class AppComponent implements OnInit {
     })
   }
 }
-
-
