@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { faBell } from '@fortawesome/free-solid-svg-icons'
+<<<<<<< HEAD
 import { AccountService } from './_services/account.service';
 import { User } from './_modles/user';
+=======
+>>>>>>> 0a9a98588bb7951bf504d2963d7f39a572322670
 
 @Component({
   selector: 'app-root',
@@ -26,6 +29,9 @@ export class AppComponent implements OnInit {
     // this.getUser();  
     this.setCurrentUser()
   }
+<<<<<<< HEAD
 
  
+=======
+>>>>>>> 0a9a98588bb7951bf504d2963d7f39a572322670
 }
