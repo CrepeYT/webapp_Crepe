@@ -27,9 +27,5 @@ export class AppComponent implements OnInit {
     // this.getUser();  
     this.setCurrentUser()
   }
-<<<<<<< HEAD
 
- 
-=======
->>>>>>> 0a9a98588bb7951bf504d2963d7f39a572322670
 }
