@@ -17,6 +17,8 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
+import { share } from 'rxjs';
+import { SharedModule } from './_modules/shared.module';
 
 
 @NgModule({
@@ -30,7 +32,6 @@ import { ToastrModule } from 'ngx-toastr';
     MemberDetailComponent,
     ListsComponent,
     MessagesComponent,
-
     NavComponent
 
   ],
@@ -39,12 +40,10 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-
     FormsModule,
-    BsDropdownModule.forRoot(),
     BrowserAnimationsModule,
-    ToastrModule.forRoot(), //import { ToastrModule } from 'ngx-toastr'
-
+    //import { ToastrModule } from 'ngx-toastr'
+    SharedModule,
     FormsModule
 
   ],
