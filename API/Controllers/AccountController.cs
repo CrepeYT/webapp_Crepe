@@ -31,7 +31,7 @@ public class AccountController : BaseApiController
         using var hmacSHA256 = new HMACSHA256();
         var user = new AppUser
         {
-            UserName = registerDto.UserName.Trim().ToLower(),
+            Username = registerDto.UserName.Trim().ToLower(),
             PasswordHash = hmacSHA256.ComputeHash(Encoding.UTF8.GetBytes(registerDto.password.Trim())),
             PasswordSalt = hmacSHA256.Key
         };
@@ -41,7 +41,7 @@ public class AccountController : BaseApiController
 
         return new UserDTO
         {
-            UserName = user.UserName,
+            Username = user.Username,
             Token = _tokenServices.CreateToken(user)
         };
     }
@@ -49,7 +49,7 @@ public class AccountController : BaseApiController
     public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDto)
     {
         var user = await _dataContext.Users.SingleOrDefaultAsync(user =>
-                            user.UserName == loginDto.UserName);
+                            user.Username == loginDto.Username);
 
         if (user is null) return Unauthorized("invalid username");
 
@@ -62,13 +62,13 @@ public class AccountController : BaseApiController
         }
         return new UserDTO
         {
-            UserName = user.UserName,
+            Username = user.Username,
             Token = _tokenServices.CreateToken(user)
         };
     }
 
     private async Task<bool> isUserExists(string username)
     {
-        return await _dataContext.Users.AnyAsync(user => user.UserName == username.ToLower());
+        return await _dataContext.Users.AnyAsync(user => user.Username == username.ToLower());
     }
 }

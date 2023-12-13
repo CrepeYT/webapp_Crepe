@@ -9,12 +9,14 @@ import { ToastrService } from 'ngx-toastr'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  // @Input() usersFromHomeComponent: any
+
   @Output() isCancel = new EventEmitter()
-  model: any = {}
 
+  model: any = {
+    username: "",
+    password: ""
+  }
   constructor(private accountService: AccountService, private router: Router, private toastr: ToastrService) { }
-
   register() {
     this.accountService.register(this.model).subscribe({
       error: err => this.toastr.error(err),
