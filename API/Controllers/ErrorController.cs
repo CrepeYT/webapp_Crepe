@@ -29,16 +29,13 @@ public class ErrorController : BaseApiController
     [HttpGet("server-error")]
     public ActionResult<string> GetServerError()
     {
-        try
-        {
-            var user = dataContext.Users.Find(-1);
-            var stringUser = user.ToString();//can not turn null to string = no reference exception
-            return stringUser;
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.ToString);
-        }
+
+
+        var user = dataContext.Users.Find(-1);
+        var stringUser = user.ToString();//can not turn null to string = no reference exception
+        return stringUser;
+
+
     }
     [HttpGet("bad-request")]
     public ActionResult<string> GetBadRequest()
