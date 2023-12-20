@@ -1,14 +1,26 @@
-﻿using System;
-using API.Entities;
+﻿using API.Entities;
 using AutoMapper;
 
-namespace API.Helpers;
+namespace api;
 
 public class AutoMapperUserProfiles : Profile
 {
-    public AutoMapperUserProfiles()
-    {
-        CreateMap<AppUser, MemberDto>();
-        CreateMap<Photo, PhotoDto>();
-    }
+  public AutoMapperUserProfiles()
+  {
+    CreateMap<AppUser, MemberDto>()
+            .ForMember(
+                user => user.MainPhotoUrl,
+                opt => opt.MapFrom(
+                    user => user.Photos.FirstOrDefault(photo => photo.IsMain).Url
+                    )
+                )
+            .ForMember(
+                user => user.Age,
+                opt => opt.MapFrom(
+                    user => user.BirthDate.CalculateAge()
+                    )
+                );
+
+    CreateMap<Photo, PhotoDto>();
+  }
 }
