@@ -1,7 +1,9 @@
-﻿using API.Entities;
+﻿using api;
+using API.DTOs;
+using API.Entities;
 using AutoMapper;
 
-namespace api;
+namespace API.Extensions;
 
 public class AutoMapperUserProfiles : Profile
 {
@@ -22,5 +24,6 @@ public class AutoMapperUserProfiles : Profile
                 );
 
     CreateMap<Photo, PhotoDto>();
+    CreateMap<MemberUpdateDto, AppUser>();
   }
 }

@@ -1,4 +1,6 @@
-﻿namespace api;
+﻿using AutoMapper;
+
+namespace api;
 
 public class MemberDto
 {
