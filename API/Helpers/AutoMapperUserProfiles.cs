@@ -1,9 +1,7 @@
-﻿using api;
-using API.DTOs;
-using API.Entities;
+﻿using API.Entities;
 using AutoMapper;
 
-namespace API.Extensions;
+namespace api;
 
 public class AutoMapperUserProfiles : Profile
 {
@@ -22,7 +20,6 @@ public class AutoMapperUserProfiles : Profile
                     user => user.BirthDate.CalculateAge()
                     )
                 );
-
     CreateMap<Photo, PhotoDto>();
     CreateMap<MemberUpdateDto, AppUser>();
   }

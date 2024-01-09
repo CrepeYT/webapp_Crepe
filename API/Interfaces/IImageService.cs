@@ -1,4 +1,6 @@
-﻿using CloudinaryDotNet.Actions;
+﻿using System;
+
+using CloudinaryDotNet.Actions;
 namespace API.Interfaces;
 public interface IImageService
 {

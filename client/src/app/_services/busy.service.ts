@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BusyService {
   count = 0;
-  constructor(private spinner: NgxSpinnerService) { }
+  constructor(private spinner: NgxSpinnerService) {}
 
   busy(name?: string | undefined) {
-    this.count++
+    this.count++;
     this.spinner.show(name, {
       type: 'timer',
-      bdColor: "rgba(0, 0, 0, 0.8)",
-      color: "#fff"
-    })
+      bdColor: 'rgba(255,255,255,0)',
+      color: '#E95420',
+    });
   }
   idle(name?: string | undefined) {
-    this.count--
+    this.count--;
     if (this.count <= 0) {
-      this.count = 0
-      this.spinner.hide(name)
+      this.count = 0;
+      this.spinner.hide(name);
     }
   }
 }

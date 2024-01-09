@@ -3,9 +3,6 @@ using API.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
-
-namespace Company.ClassLibrary1;
-
 public class ImageService : IImageService
 {
     private readonly Cloudinary _cloudinary;
@@ -27,7 +24,7 @@ public class ImageService : IImageService
             {
                 File = new FileDescription(file.FileName, stream),
                 Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
-                Folder = "InternetPrograming-tinner"
+                Folder = "Crepe"
             };
             uploadResualt = await _cloudinary.UploadAsync(uploadParams);
         }

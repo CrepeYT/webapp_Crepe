@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
 using API.Data;
-using API.DTOs;
 using API.Entities;
-using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -54,10 +52,6 @@ public class UsersController : BaseApiController
   [HttpPut]
   public async Task<ActionResult> UpdateUserProfile(MemberUpdateDto memberUpdateDto)
   {
-    if (memberUpdateDto is null)
-    {
-      throw new ArgumentNullException(nameof(memberUpdateDto));
-    }
 
     var user = await _GetUser();
     if (user is null) return NotFound();

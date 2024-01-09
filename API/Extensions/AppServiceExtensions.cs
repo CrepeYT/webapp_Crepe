@@ -1,7 +1,6 @@
 ﻿using api;
 using API.Data;
 using API.Interfaces;
-using Company.ClassLibrary1;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -20,7 +19,6 @@ public static class AppServiceExtensions
     services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     services.Configure<CloudinarySettings>(conf.GetSection("CloudinarySettings"));
     services.AddScoped<IImageService, ImageService>();
-
 
     return services;
   }
