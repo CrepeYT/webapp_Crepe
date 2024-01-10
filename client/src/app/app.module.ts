@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from './_modules/shared.module';
@@ -24,6 +24,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MemberProfileComponent } from './members/member-profile/member-profile.component';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
     MemberCardComponent,
     MemberProfileComponent,
     PhotoEditorComponent,
+    TextInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
     HttpClientModule,
     FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
   ],

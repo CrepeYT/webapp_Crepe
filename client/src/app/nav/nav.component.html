@@ -2,10 +2,7 @@
   <div class="container">
     <a class="navbar-brand" href="#">Tinner!</a>
 
-    <ul
-      *ngIf="accountService.currentUser$ | async"
-      class="navbar-nav me-auto mb-2 mb-lg-0"
-    >
+    <ul *ngIf="accountService.currentUser$ | async" class="navbar-nav me-auto mb-2 mb-lg-0">
       <ng-container *ngIf="accountService.currentUser$ | async">
         <li class="nav-item">
           <a class="nav-link" href="/members" routerLinkActive="active">
@@ -23,11 +20,8 @@
       </ng-container>
     </ul>
 
-    <div
-      dropdown
-      class="dropdown"
-      *ngIf="accountService.currentUser$ | async as user"
-    >
+    <div dropdown class="dropdown" *ngIf="accountService.currentUser$ | async as user">
+      <img src="{{user.photoUrl || './assets/images/default-user.png'}}" alt="{{user.username}} photo">
       <a dropdownToggle class="text-decoration-none dropdown-toggle text-light">
         Hello {{ user.username }}
       </a>
@@ -37,27 +31,12 @@
       </div>
     </div>
 
-    <form
-      *ngIf="!(accountService.currentUser$ | async)"
-      #logingForm="ngForm"
-      (ngSubmit)="login()"
-      autocomplete="off"
-      class="d-flex"
-    >
-      <input
-        name="username"
-        [(ngModel)]="model.username"
-        class="form-control me-2"
-        type="text"
-        placeholder="Username"
-      />
-      <input
-        name="password"
-        [(ngModel)]="model.password"
-        class="form-control me-2"
-        type="password"
-        placeholder="Password"
-      />
+    <form *ngIf="!(accountService.currentUser$ | async)" #logingForm="ngForm" (ngSubmit)="login()" autocomplete="off"
+      class="d-flex">
+      <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text"
+        placeholder="Username" />
+      <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password"
+        placeholder="Password" />
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>
   </div>
