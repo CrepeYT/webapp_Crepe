@@ -5,6 +5,7 @@ using api.Controllers;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +15,14 @@ public class AccountController : BaseApiController
 {
   private readonly DataContext _dataContext;
   private readonly ITokenService _tokenService;
+  private readonly IMapper _mapper;
 
-  public AccountController(DataContext dataContext, ITokenService tokenService)
+  public AccountController(DataContext dataContext, ITokenService tokenService, IMapper mapper)
   {
     _dataContext = dataContext;
     _tokenService = tokenService;
+    _mapper = mapper;
+
   }
 
   [HttpPost("register")]
@@ -26,15 +30,12 @@ public class AccountController : BaseApiController
   {
     if (await isUserExists(registerDto.Username!))
       return BadRequest("Username is taken");
+    var user = _mapper.Map<AppUser>(registerDto);
+    using var hMACSHA256 = new HMACSHA256();
 
-    using var hmac = new HMACSHA256();
-
-    var user = new AppUser
-    {
-      UserName = registerDto.Username.Trim().ToLower(),
-      PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-      PasswordSalt = hmac.Key
-    };
+    user.UserName = registerDto.Username!.Trim().ToLower();
+    user.PasswordHash = hMACSHA256.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password!.Trim()));
+    user.PasswordSalt = hMACSHA256.Key;
 
     _dataContext.Users.Add(user);
     await _dataContext.SaveChangesAsync();
@@ -42,7 +43,9 @@ public class AccountController : BaseApiController
     return new UserDto
     {
       Username = user.UserName,
-      Token = _tokenService.CreateToken(user)
+      Token = _tokenService.CreateToken(user),
+      Aka = user.Aka,
+      Gender = user.Gender
     };
   }
 
@@ -69,7 +72,9 @@ public class AccountController : BaseApiController
     {
       Username = user.UserName,
       Token = _tokenService.CreateToken(user),
-      PhotoUrl = user.Photos.FirstOrDefault(photo => photo.IsMain)?.Url
+      PhotoUrl = user.Photos.FirstOrDefault(photo => photo.IsMain)?.Url,
+      Aka = user.Aka,
+      Gender = user.Gender
     };
   }
 

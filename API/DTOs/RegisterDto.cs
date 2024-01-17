@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs;
 
+#nullable disable
 public class RegisterDto
 {
 
@@ -12,4 +13,9 @@ public class RegisterDto
   [Required(ErrorMessage = "Password is required")]
   [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
   public string Password { get; set; }
+  [Required] public string Aka { get; set; }
+  [Required] public string Gender { get; set; }
+  [Required] public DateOnly BirthDate { get; set; }
+  [Required] public string City { get; set; }
+  [Required] public string Country { get; set; }
 }
