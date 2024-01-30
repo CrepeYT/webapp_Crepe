@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using api;
+using API.Controllers;
 using API.Data;
 using API.Entities;
 using API.Extensions;
@@ -9,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Controllers;
+namespace API.Controllers;
 
 [Authorize]
 public class UsersController : BaseApiController
@@ -26,7 +28,7 @@ public class UsersController : BaseApiController
 
   }
 
-  private async Task<AppUser?> _GetUser()
+  private async Task<AppUser> _GetUser()
   {
     var username = User.GetUsername();
     if (username is null) return null;

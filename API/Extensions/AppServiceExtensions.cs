@@ -1,5 +1,6 @@
 ﻿using api;
 using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +15,13 @@ public static class AppServiceExtensions
       opt.UseSqlite(conf.GetConnectionString("SqliteConnection"));
     });
     services.AddCors();
-    services.AddScoped<ITokenService, TokenService>();
-    services.AddScoped<IUserRepository, UserRepository>();
     services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     services.Configure<CloudinarySettings>(conf.GetSection("CloudinarySettings"));
     services.AddScoped<IImageService, ImageService>();
+    services.AddScoped<LogUserActivity>();
+    services.AddScoped<ITokenService, TokenService>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IlikesRepository, LikesRepository>();
 
     return services;
   }

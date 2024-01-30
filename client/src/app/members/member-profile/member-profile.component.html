@@ -18,11 +18,12 @@
         </div>
         <div>
           <strong>Last active:</strong>
-          <p>{{ member.lastActive }}</p>
+          <p>{{member.lastActive + 'z' | timeago}}</p>
+          
         </div>
         <div>
           <strong>Member since:</strong>
-          <p>{{ member.created }}</p>
+          <p>{{member.created| date: 'dd MMM yyyy'}}</p>
         </div>
       </div>
       <div class="card-footer">
@@ -52,7 +53,7 @@
           <div class="d-flex flex-row align-items-center">
             <label for="city">City:</label>
             <input type="text" [(ngModel)]="member.city" name="city" class="form-control mx-5" />
-            <label for="country">City:</label>
+            <label for="country">Country:</label>
             <input type="text" [(ngModel)]="member.country" name="country" class="form-control mx-5" />
           </div>
         </form>

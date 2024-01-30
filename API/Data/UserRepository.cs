@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
+namespace API.Data;
 public class UserRepository : IUserRepository
 {
   private readonly DataContext _dataContext;
@@ -32,6 +33,11 @@ public class UserRepository : IUserRepository
     query = query.Where(user => user.UserName != userParams.CurrentUserName);
     if (userParams.Gender != "non-binary")
       query = query.Where(user => user.Gender == userParams.Gender);
+       query = userParams.OrderBy switch
+    {
+      "created" => query.OrderByDescending(user => user.Created),
+      _ => query.OrderByDescending(user => user.LastActive),
+    };
     query.AsNoTracking();
     var minBirthDate = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
     var maxBirthDate = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
@@ -92,4 +98,12 @@ public class UserRepository : IUserRepository
         .Include(user => user.Photos)
         .SingleOrDefaultAsync(user => user.UserName == username);
   }
+
+    public async Task<AppUser> GetUserByUserNameWithOutPhotoAsync(string username)
+    {
+        return await _dataContext.Users
+       // .Include(user => user.Photos)
+        .SingleOrDefaultAsync(user => user.UserName == username);
+    }
+
 }
