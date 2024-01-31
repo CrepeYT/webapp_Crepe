@@ -22,6 +22,7 @@ public static class AppServiceExtensions
     services.AddScoped<ITokenService, TokenService>();
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IlikesRepository, LikesRepository>();
+    services.AddScoped<IMessageRepository, MessageRepository>();
 
     return services;
   }
