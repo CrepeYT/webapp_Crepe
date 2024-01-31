@@ -5,13 +5,14 @@ namespace API.Data;
 
 public class DataContext : DbContext
 {
-  public DataContext(DbContextOptions options) : base(options)
-  {
-    
-  }
+    public DbSet<Message> Messages { get; set; }
+    public DataContext(DbContextOptions options) : base(options)
+    {
 
-  public DbSet<AppUser> Users { get; set; }
-   public DbSet<UserLike> Likes { get; set; } 
+    }
+
+    public DbSet<AppUser> Users { get; set; }
+    public DbSet<UserLike> Likes { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -29,6 +30,16 @@ public class DataContext : DbContext
             .WithMany(appuser => appuser.LikedByUsers)
             .HasForeignKey(userlike => userlike.LikedUserId)
             .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Message>()
+            .HasOne(message => message.Recipient)
+            .WithMany(appuser => appuser.MessagesReceived)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Message>()
+            .HasOne(message => message.Sender)
+            .WithMany(appuser => appuser.MessagesSent)
+            .OnDelete(DeleteBehavior.Restrict);
     }
-  
+
+
 }
