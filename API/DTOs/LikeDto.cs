@@ -1,3 +1,5 @@
+using api;
+
 namespace API.DTOs;
 #nullable disable
 public class LikeDto
@@ -9,4 +11,5 @@ public class LikeDto
     public string City { get; set; }
     public string Country { get; set; }
     public string MainPhotoUrl { get; set; }
+    public List<Photo> Photos { get; set; }
 }

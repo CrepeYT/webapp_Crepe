@@ -10,7 +10,7 @@ namespace API.Data;
 
 public class LikesRepository : IlikesRepository
 {
-  private readonly DataContext _dataContext;
+    private readonly DataContext _dataContext;
 
     public LikesRepository(DataContext dataContext)
     {
@@ -33,6 +33,7 @@ public class LikesRepository : IlikesRepository
         var users = _dataContext.Users.OrderBy(user => user.UserName).AsQueryable();
         var likes = _dataContext.Likes.AsQueryable();
 
+
         if (likesParams.Predicate == "liked")
         {
             likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
@@ -44,16 +45,19 @@ public class LikesRepository : IlikesRepository
             users = likes.Select(like => like.SourceUser!);
         }
 
-       var likedUsers = users.Select(user => new LikeDto
+
+        var likedUsers = users.Select(user => new LikeDto
         {
             UserName = user.UserName,
             Aka = user.Aka,
             City = user.City,
             Country = user.Country,
             Age = user.BirthDate.CalculateAge(),
+            Photos = user.Photos.ToList(),
             MainPhotoUrl = user.Photos.FirstOrDefault(photo => photo.IsMain).Url,
-            Id = user.Id
-         }); //.ToListAsync();
-          return await PageList<LikeDto>.CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
+            Id = user.Id,
+            
+        }); //.ToListAsync();
+        return await PageList<LikeDto>.CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
     }
 }

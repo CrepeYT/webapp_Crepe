@@ -122,7 +122,7 @@ export class MembersService {
 
   getLikes(listParams: ListParams) {
   
-     let httpParams = getPaginationHeaders(listParams.pageNumber, listParams.pageSize) //<--
+     let httpParams = getPaginationHeaders(listParams.pageNumber, listParams.pageSize) 
     
     const url = this.baseUrl + '/likes'
     return getPaginationResult<Member[]>(url, httpParams, this.http)

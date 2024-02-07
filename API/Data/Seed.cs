@@ -1,28 +1,30 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+namespace API.Data;
+#nullable disable
 public class Seed
 {
-  public static async Task SeedUsers(DataContext dataContext)
-  {
-    if (await dataContext.Users.AnyAsync())
-      return;
-    var userSeedData = await File.ReadAllTextAsync("Data/UserSeedData.json");
-    var opt = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-    var users = JsonSerializer.Deserialize<List<AppUser>>(userSeedData, opt);
-    foreach (var user in users)
+    // public static async Task SeedUsers(DataContext dataContext)
+    public static async Task SeedUsers(UserManager<AppUser> userManager) //
     {
-      using var hmacSHA256 = new HMACSHA256();
-      user.UserName = user.UserName.ToLower();
-      user.PasswordHash = hmacSHA256.ComputeHash(Encoding.UTF8.GetBytes("P@ssw0rd"));
-      user.PasswordSalt = hmacSHA256.Key;
+        if (await userManager.Users.AnyAsync()) return; //
 
-      dataContext.Users.Add(user);
+        var userSeedData = await File.ReadAllTextAsync("Data/UserSeedData.json");
+        var opt = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var users = JsonSerializer.Deserialize<List<AppUser>>(userSeedData, opt);
+        foreach (var user in users)
+        {
+            user.UserName = user.UserName.ToLower();// แล้วแต่ชอบ
+            await userManager.CreateAsync(user, "P@ssw0rd"); //
+            // dataContext.Users.Add(user);
+        }
+        // await dataContext.SaveChangesAsync();
     }
-    await dataContext.SaveChangesAsync();
-  }
+
+
 }
