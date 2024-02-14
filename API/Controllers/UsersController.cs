@@ -35,12 +35,9 @@ public class UsersController : BaseApiController
     return await _userRepository.GetUserByUserNameAsync(username);
   }
 
-  [HttpGet]
-  // public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
-  // {
-  //   return Ok(await _userRepository.GetMembersAsync());
-  // }
-  public async Task<ActionResult<PageList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
+ [Authorize(Roles = "Administrator,Member")]
+    [HttpGet]
+    public async Task<ActionResult<PageList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
   {
     var username = User.GetUsername();
     if (username is null) return NotFound();
@@ -68,7 +65,8 @@ public class UsersController : BaseApiController
     return await _userRepository.GetUserByIdAsync(id);
   }
 
-  [HttpGet("username/{username}")]
+   [Authorize(Roles = "Administrator,Moderator,Member")]
+    [HttpGet("username/{username}")]
   public async Task<ActionResult<AppUser>> GetUserByUserName(string username)
   {
     return await _userRepository.GetUserByUserNameAsync(username);
