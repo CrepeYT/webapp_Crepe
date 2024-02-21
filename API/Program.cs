@@ -27,14 +27,17 @@ app.UseAuthentication();
 app.UseAuthorization(); 
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapControllers();
-
+app.MapHub<MessageHub>("hubs/message");
 using var scope = app.Services.CreateScope();
 var service = scope.ServiceProvider;
 try {
     var dataContext = service.GetRequiredService<DataContext>();
      var userManager = service.GetRequiredService<UserManager<AppUser>>(); //<--
     var roleManager = service.GetRequiredService<RoleManager<AppRole>>(); //<--
-    await dataContext.Database.MigrateAsync();
+     await dataContext.Database.MigrateAsync();
+  //await dataContext.Connections.RemoveRange(dataContext.Connections);//<-- good for small scale
+  //await dataContext.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]"); //excellent, error for sqlite
+  await dataContext.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]"); //<--good for sqlite
    await Seed.SeedUsers(userManager, roleManager); //<--
 }
 catch (System.Exception e)
